@@ -1,0 +1,22 @@
+<div class="main">
+<div class="form-group" style="position: center">
+    <H2 style="position: center;">Compare 2 Ear Files</H2>
+</div>
+<form>
+
+    <div class="form-group">
+        <label>File 1</label>
+        <app-upload-component (newFileEvent)="file1change($event)"></app-upload-component>
+    </div>
+    <div class="form-group">
+        <label>File 2</label>
+        <app-upload-component (newFileEvent)="file1change($event)"></app-upload-component>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-danger btn-fill" (click)="compare($event)">Compare</button>
+    </div>
+    <div *ngIf="resultFolder!==null && resultFolder!==undefined" > result {{resultFolder.children}} </div>
+    <app-tree-view *ngIf="resultFolder!==null && resultFolder!==undefined" (tree)="resultFolder"></app-tree-view>
+</form>
+
+</div>

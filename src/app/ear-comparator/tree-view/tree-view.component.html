@@ -1,0 +1,18 @@
+{{TREE_DATA}}    SHOWING TREE_DATA
+{{treeControl}} treecontrole
+<div *ngFor="let i from TREE_DATA.children">{{i.name}}</div>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button
+                [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        {{node.name}}
+    </mat-tree-node>
+</mat-tree>
