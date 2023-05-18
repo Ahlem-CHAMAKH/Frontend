@@ -9,6 +9,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
   },
   {
+    path: 'createUser',
+    loadChildren: () => import('./features/create-user/create-user.module').then(m => m.CreateUserModule),
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
@@ -17,6 +21,11 @@ const appRoutes: Routes = [
   {
     path: 'earComparator',
     loadChildren: () => import('./ear-comparator/ear-comparator.module').then(m => m.EarComparatorModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'scriptTransformer',
+    loadChildren: () => import('./script-transformer/script-transformer.module').then(m => m.ScriptTransformerModule),
     canActivate: [AuthGuard]
   },
   {

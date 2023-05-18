@@ -59,13 +59,19 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
 
       <mat-nav-list>
-        <h3 mat-subheader>Home</h3>
         <a mat-list-item [routerLink]="['/earComparator']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            Ear Comparator
+            Comparer Ear
           </mat-icon>
-          <p mat-line> Ear Comparator </p>
+          <p mat-line> Comparer Ear </p>
         </a>
+        <a mat-list-item [routerLink]="['/scriptTransformer']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            Transformer Script
+          </mat-icon>
+          <p mat-line> Transformer Script </p>
+        </a>
+
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
@@ -84,6 +90,12 @@
             people
           </mat-icon>
           <p mat-line> Users </p>
+        </a>
+        <a mat-list-item [routerLink]="['/createUser']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            people
+          </mat-icon>
+          <p mat-line>Create Users </p>
         </a>
 
         <a mat-list-item [routerLink]="['/account/profile']">

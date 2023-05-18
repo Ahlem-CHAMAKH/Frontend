@@ -1,0 +1,91 @@
+<div class="example-input-wrapper" hidden>
+    <label for="duration">Animation duration:</label>
+    <input id="duration" value="2000" type="number" min="0" step="100" #duration>
+</div>
+
+<mat-vertical-stepper [linear]="false" #stepper [animationDuration]="duration.value">
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Paramétrer Base de données</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Nom Base de données" formControlName="nomBaseDeDonnées" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="URL" formControlName="url" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="PORT" formControlName="port" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+        <mat-step [stepControl]="userFormGroup">
+            <form [formGroup]="userFormGroup">
+                <ng-template matStepLabel>Paramétrer utilisateurs</ng-template>
+                <mat-form-field>
+                    <input matInput placeholder="Nom Utilisateur Type 1" formControlName="utilisateurDS" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nom Utilisateur Type 2" formControlName="utilisateurHistory" required>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Paramétrer transformation utilisateur type 1</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Source 00.sql" formControlName="file0" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="pattern0" formControlName="pattern0" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Source 01.sql" formControlName="file1" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="pattern1" formControlName="pattern1" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="forthFormGroup">
+        <form [formGroup]="forthFormGroup">
+            <ng-template matStepLabel>Paramétrer transformation utilisateur type 2</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Source 10.sql" formControlName="file0" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="pattern1" formControlName="pattern1" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Source 11.sql" formControlName="file1" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="pattern1" formControlName="pattern1" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>

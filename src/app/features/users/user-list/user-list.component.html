@@ -1,21 +1,41 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center none">
-  <div fxFlex="95%">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">CIN</th>
+    <th scope="col">Nom</th>
+    <th scope="col">Prenom</th>
+    <th scope="col">Email</th>
+    <th scope="col">Role</th>
 
-    <mat-card>
-      <mat-card-content>
-        <h2>Users</h2>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let u of utilisateurs; index as i">
+    <th scope="row">{{ i + 1 }}</th>
+    <td>
+      {{ u.cin }}
+    </td> <td>
+         {{ u.nom }}
+    </td>
+    <td>{{ u.prenom }}</td>
+    <td>{{ u.email }}</td>
+    <td>  <i class="fa fa-user-secret" aria-hidden="true" *ngIf="u.role=='ChefDeProjet'"></i>
+      <i class="fa fa-user" aria-hidden="true" *ngIf="u.role=='Developpeur'"></i>
+       {{ u.role }}</td>
+
+  </tr>
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          (pageChange)="refreshUtilisateurs()"
+  >
+  </ngb-pagination>
 
 
-        <div class="container" fxLayout="row" fxLayoutAlign="center none">
-          <div fxFlex="50%" class="text-center no-records animate">
-            <mat-icon>people_outline</mat-icon>
-            <p>No users exist.</p>
-          </div>
-          <mat-icon> </mat-icon>
-        </div>
-
-      </mat-card-content>
-    </mat-card>
-
-  </div>
 </div>

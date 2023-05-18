@@ -1,24 +1,50 @@
-import {Component, Input} from '@angular/core';
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
-import {FolderStruct} from "../entity/folder-struct";
+import { NestedTreeControl } from '@angular/cdk/tree';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
+export interface MyTreeNode {
+  name: string;
+  children?: MyTreeNode[];
+}
 
 @Component({
   selector: 'app-tree-view',
-  templateUrl: './tree-view.component.html',
-  styleUrls: ['./tree-view.component.css']
+    templateUrl: './tree-view.component.html'
 })
-export class TreeViewComponent  {
-@Input("tree")  TREE_DATA: FolderStruct | undefined
+export class TreeViewComponent implements OnChanges,OnInit{
+  treeControl = new NestedTreeControl<MyTreeNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<MyTreeNode>();
+  @Input("TREE_DATA") TREE_DATA: MyTreeNode[] = [];
+  constructor() {
+    this.dataSource.data = this.TREE_DATA;
+  }
+    ngOnChanges(changes: SimpleChanges) {
+        this.dataSource.data = this.TREE_DATA;
+    }
+    ngOnInit() {
+        this.dataSource.data = this.TREE_DATA;
+    }
+  hasChild = (_: number, node: MyTreeNode) => !!node.children && node.children.length > 0;
+}
+/*implements
+} OnInit {
+  @Input("treeData") TREE_DATA : FolderStruct[]=[];
+  hasChild(_: number, node: FolderStruct) {
+    return true;
+  }
   treeControl = new NestedTreeControl<FolderStruct>((node) => node.children);
   dataSource = new MatTreeNestedDataSource<FolderStruct>();
   constructor() {
-    // @ts-ignore
-    this.dataSource.data = this.TREE_DATA?.children;
+
+      this.dataSource.data = this.TREE_DATA;
+
   }
-  hasChild =true;
+
+  ngOnInit() {
 
 
+      this.dataSource.data = this.TREE_DATA;
 
+  }
 }
+*/
