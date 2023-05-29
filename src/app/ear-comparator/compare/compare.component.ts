@@ -51,7 +51,7 @@ export class CompareComponent{
   contents: Contents[] =[];
   hasContent : boolean=false;
   constructor(private http: HttpClient,private router :Router,private  service: UploadServiceService
-      ,private formBuilder: FormBuilder, private el:ElementRef, private renderer:Renderer2) {
+      ,private formBuilder: FormBuilder, private el:ElementRef) {
     this.file1 = new File([], 'file');
     this.file2 = new File([], 'file');
     this.selectedFile=new File([],'file');

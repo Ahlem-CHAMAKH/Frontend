@@ -27,6 +27,15 @@ const appRoutes: Routes = [
     path: 'scriptTransformer',
     loadChildren: () => import('./script-transformer/script-transformer.module').then(m => m.ScriptTransformerModule),
     canActivate: [AuthGuard]
+  },  {
+    path: 'simulerScript',
+    loadChildren: () => import('./simuler-script/simuler-script.module').then(m => m.SimulerScriptModule),
+    canActivate: [AuthGuard]
+  },
+   {
+    path: 'historiqueSimulation',
+    loadChildren: () => import('./afficher-historique-simulations/afficher-historique-simulations.module').then(m => m.AfficherHistoriqueSimulationsModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'customers',

@@ -11,8 +11,8 @@ export class ScriptTransformerServiceService {
   constructor(private httpClient:HttpClient ,private router:Router) {
 
   }
-
   public getResult(formData: any){
-    return this.httpClient.post(this.SERVER_URL+"/result", formData, { responseType: 'arraybuffer' });
+    console.log(formData+"/result")
+    return this.httpClient.post(this.SERVER_URL+"/result", formData, { responseType: 'blob' });
   }
 }
