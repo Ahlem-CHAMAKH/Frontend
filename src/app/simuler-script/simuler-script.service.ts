@@ -5,14 +5,14 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class ScriptTransformerServiceService {
-  SERVER_URL: string = "http://localhost:8090/ScriptTransformer";
+export class SimulerScriptService {
+  SERVER_URL: string = "http://localhost:8090/Simulation";
 
   constructor(private httpClient:HttpClient ,private router:Router) {
 
   }
   public getResult(formData: any){
-    console.log(formData+"/result")
-    return this.httpClient.post(this.SERVER_URL+"/result", formData, { responseType: 'blob' });
+    console.log(formData+"/simulate")
+    return this.httpClient.post(this.SERVER_URL+"/simulate", formData);
   }
 }
