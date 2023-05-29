@@ -32,6 +32,11 @@ const appRoutes: Routes = [
     loadChildren: () => import('./simuler-script/simuler-script.module').then(m => m.SimulerScriptModule),
     canActivate: [AuthGuard]
   },
+   {
+    path: 'historiqueSimulation',
+    loadChildren: () => import('./afficher-historique-simulations/afficher-historique-simulations.module').then(m => m.AfficherHistoriqueSimulationsModule),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'customers',
     loadChildren: () => import('./features/customers/customers.module').then(m => m.CustomersModule),
