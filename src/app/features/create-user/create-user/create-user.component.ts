@@ -24,6 +24,7 @@ export class CreateUserComponent implements OnInit {
   newPassword!: string;
   newPasswordConfirm!: string;
   disableSubmit!: boolean;
+  message:string="l'email est obligatoire*";
 
   constructor(private router:Router, private authService: AuthenticationService,
               private logger: NGXLogger,
@@ -76,7 +77,8 @@ export class CreateUserComponent implements OnInit {
   }
    createUser(){
        console.log(this.user);
-       this.userS.createUtilisateur(this.user).subscribe((data)=>this.router.navigate(['users']));
+
+           this.userS.createUtilisateur(this.user).subscribe((data) => this.router.navigate(['users']));
 
    }
 }

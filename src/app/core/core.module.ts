@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 import { GlobalErrorHandler } from './services/globar-error.handler';
 import { AdminGuard } from './guards/admin.guard';
+import {AuthenticationService} from "./services/auth.service";
 
 @NgModule({
   imports: [
@@ -19,10 +20,9 @@ import { AdminGuard } from './guards/admin.guard';
   declarations: [
   ],
   providers: [
-    AuthGuard,
+    AuthenticationService,    AuthGuard,
     AdminGuard,
-    MediaMatcher,
-    {
+    MediaMatcher,      {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,
       multi: true

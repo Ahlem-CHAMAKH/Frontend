@@ -1,29 +1,36 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { delay, map } from 'rxjs/operators';
 import {of, EMPTY, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService {
 
+export class AuthenticationService {
+    SERVER_URL: string = "http://localhost:8090/logins";
     constructor(private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
     }
-
+    getToken(){
+        return sessionStorage.getItem("app.token");
+    }
+    getHeader(){
+       let headers=new  HttpHeaders();
+       console.log("token "+this.getToken());
+       headers.append("Authorization",'Bearer '+this.getToken())
+       return headers;
+    }
     isLoggedIn(): boolean {
         return sessionStorage.getItem("app.token") != null;
     }
 
-    login(username: string, password: string): Observable<string> {
-        const httpOptions = {
-            headers: {
-                Authorization: 'Basic ' + window.btoa(username + ':' + password)
-            },
-            responseType: 'text' as 'text',
-        };
-        return this.http.post("/api/auth", null, httpOptions);
+    login(username: string, password: string): Observable<any> {
+          let formData=new FormData();
+        formData.append("email",username);
+        formData.append("password",password);
+
+        return this.http.post(this.SERVER_URL+"/authenticate", formData);
     }
 
     logout() {
@@ -34,20 +41,11 @@ export class AuthenticationService {
     }
 
     isUserInRole(roleFromRoute: string) {
-        const roles = sessionStorage.getItem("app.roles");
 
-        if (roles!.includes(",")) {
-            if (roles === roleFromRoute) {
-                return true;
-            }
-        } else {
-            const roleArray = roles!.split(",");
-            for (let role of roleArray) {
-                if (role === roleFromRoute) {
+        const role = sessionStorage.getItem("app.role");
+             if (role === roleFromRoute) {
                     return true;
                 }
-            }
-        }
         return false;
     }
     getCurrentUser(): any {
