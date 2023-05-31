@@ -13,7 +13,8 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
     styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
-
+  currentUserName: string='';
+  role: string | null ='';
     private _mobileQueryListener: () => void;
     mobileQuery: MediaQueryList;
     showSpinner: boolean = false;
@@ -33,10 +34,14 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         // tslint:disable-next-line: deprecation
         this.mobileQuery.addListener(this._mobileQueryListener);
     }
-
+    isRole(role:string){
+    return this.authService
+        .isUserInRole(role);
+    }
     ngOnInit(): void {
         const user = this.authService.getCurrentUser();
-
+        this.currentUserName=this.authService.getCurrentUser()
+        this.role=sessionStorage.getItem("app.role");
         this.isAdmin = true;
         this.userName = (user!=null)?user.fullName:'';
 

@@ -16,17 +16,20 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthenticationService,
         private router: Router,
         private dialog: MatDialog) { }
+    getToken(){
+        return sessionStorage.getItem("app.token");
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const user = this.authService.getCurrentUser();
 
-        if (user && user.token) {
+        if (this.getToken()!=null && req.headers.get("Authorization")==null) {
 
             const cloned = req.clone({
                 headers: req.headers.set('Authorization',
-                    'Bearer ' + user.token)
+                    'Bearer ' + this.getToken())
             });
+
 
             return next.handle(cloned).pipe(tap(() => { }, (err: any) => {
                 if (err instanceof HttpErrorResponse) {

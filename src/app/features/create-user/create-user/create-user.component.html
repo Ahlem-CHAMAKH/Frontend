@@ -5,6 +5,10 @@
 
         <div fxFlex="40%" fxFlex.md="60%" fxFlex.sm="50%" fxFlex.xs="100%">
             <mat-form-field class="full-width">
+                <input matInput placeholder="Email" formControlName="email" [type]="'email'">
+
+            </mat-form-field>
+            <mat-form-field class="full-width">
                 <input matInput placeholder="CIN"  formControlName="cin"  [type]="'text'">
             </mat-form-field>
             <mat-form-field class="full-width">
@@ -13,16 +17,13 @@
             <mat-form-field class="full-width">
                 <input matInput placeholder="Prenom"    formControlName="prenom"  [type]="'text'">
             </mat-form-field>
-            <mat-form-field class="full-width">
-                <input matInput placeholder="Email" formControlName="email" [type]="'email'">
 
-            </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Role</mat-label>
                 <select matNativeControl  formControlName="role" [type]="'role'">
                     <option value="ChefDeProjet">Chef de projet</option>
                     <option value="AdminITVermeg">Admin IT Vermeg</option>
-                    <option value="Developpeur">Developpeur</option>
+                    <option value="Developpeur">Développeur</option>
                 </select>
             </mat-form-field>
             <mat-form-field class="full-width">
@@ -36,8 +37,8 @@
             </mat-form-field>
 
 
-            <button mat-raised-button color="primary" [disabled]="user.cin==null || user.cin == undefined " (click)="createUser()">Save</button>
-
+            <button mat-raised-button color="primary" [disabled]="user.email==null || user.email == undefined " (click)="createUser()">Save</button>
+            <h4 style="color:red">{{message}}</h4>
         </div>
 
     </div>

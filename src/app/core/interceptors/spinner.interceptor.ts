@@ -13,6 +13,9 @@ import { SpinnerService } from './../services/spinner.service';
 export class SpinnerInterceptor implements HttpInterceptor {
 
     constructor(private spinnerService: SpinnerService) { }
+    getToken(){
+        return sessionStorage.getItem("app.token");
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

@@ -4,8 +4,11 @@ import { UntypedFormControl, Validators, UntypedFormGroup } from '@angular/forms
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import jwtDecode, {JwtPayload} from "jwt-decode";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import * as bcrypt from "bcryptjs";
+import {map} from "rxjs/operators";
+import {UtilisateurService} from "../../users/service/utilisateur.service";
+import {Utilisateur} from "../../create-user/utilisateur";
 
 @Component({
     selector: 'app-login',
@@ -13,16 +16,18 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    username: string = "";
+    email: string = "";
     password: string = "";
     message: string = "";
     loginForm!: UntypedFormGroup;
     loading!: boolean;
+   // error: string;
 
     constructor(private router: Router,
         private titleService: Title,
         private notificationService: NotificationService,
-        private authService: AuthenticationService, private snackBar: MatSnackBar) {
+        private authService: AuthenticationService, private snackBar: MatSnackBar,
+                private  userS: UtilisateurService) {
     }
 
     ngOnInit() {
@@ -33,36 +38,44 @@ export class LoginComponent implements OnInit {
 
     private createForm() {
         const savedUserEmail = localStorage.getItem('savedUserEmail');
-
         this.loginForm = new UntypedFormGroup({
             email: new UntypedFormControl(savedUserEmail, [Validators.required, Validators.email]),
             password: new UntypedFormControl('', Validators.required),
             rememberMe: new UntypedFormControl(savedUserEmail !== null)
         });
-    }
-
-
-    public login(): void {
-        sessionStorage.removeItem("app.token");
-
-        this.authService.login(this.username, this.password)
-            .subscribe({
-                next: (token) => {
-                    sessionStorage.setItem("app.token", String(token));
-
-                    const decodedToken = jwtDecode<JwtPayload>(String(token));
-                    // @ts-ignore
-                    sessionStorage.setItem("app.roles",  decodedToken.scope);
-                    sessionStorage.setItem("currentUser",  this.username);
-
-
-                    this.router.navigateByUrl("''");
-                },
-                error: (error) => this.snackBar.open(`Login failed: ${error.status}`, "OK")
+        this.loginForm.get('email')?.valueChanges
+            .subscribe(val => {
+                this.email = val;
+            });
+        this.loginForm.get('password')?.valueChanges
+            .subscribe(val => {
+                this.password = val;
             });
     }
+ public authenticate(){
+     console.log("logging in");
+     sessionStorage.removeItem("app.token");
+     this.authService.login(this.email,this.password).subscribe((response) => {
+             sessionStorage.setItem("currentUser", this.email);
+             let tokenStr = response.token;
+             sessionStorage.setItem("app.token", tokenStr);
+       this.userS.getUtilisateurByEmail(this.email).subscribe(response=> {
+           sessionStorage.setItem("currentUserName", (<string>response.nom) + (<string>response.prenom) );
+           sessionStorage.setItem("app.role", <string>((response != null && response != undefined) ? response.role : "AdminITVermeg") );
+                 this.router.navigateByUrl("''")
+         })});
+ }
 
     resetPassword() {
         this.router.navigate(['/auth/password-reset-request']);
+    }
+    isUserLoggedIn() {
+        let user = sessionStorage.getItem("username");
+        console.log(!(user === null));
+        return !(user === null);
+    }
+
+    logOut() {
+        sessionStorage.removeItem("username");
     }
 }

@@ -13,12 +13,17 @@ AuthGuard implements CanActivate {
         private authService: AuthenticationService) { }
 
     public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-       /* if (this.authService.isLoggedIn() && this.authService.isUserInRole(next.routeConfig?.data?.['role'])) {
-            return true;
-        } else {
+        console.log(next.routeConfig?.data?.['role']+"  "+this.authService.isUserInRole(next.routeConfig?.data?.['role']));
+        if (this.authService.isLoggedIn() && next.routeConfig?.data?.['role']!=undefined && this.authService.isUserInRole(next.routeConfig?.data?.['role'])) {
+          console.log("in can activate");  return true;
+        }
+        if (this.authService.isLoggedIn() && next.routeConfig?.data?.['role']==undefined ) {
+            console.log("in can activate");  return true;
+        }else {
+           console.log("in can activate else");
             this.router.navigate(['auth/login']);
             return false;
-        }*/
+        }
         return true;
     }
 
